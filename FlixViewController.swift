@@ -69,7 +69,26 @@ class FlixViewController: UIViewController, UITableViewDelegate, UITableViewData
         
         return cell
     }
-
     
+    // Load the selected movie into a new view controller
+    // Get the new view controller using segue.destination
+    // Pass the selected object to the new view controller
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?){
 
+        // 1. Find the user selected movie
+        print("User Selected a Movie")
+
+        let selectedCell = sender as! UITableViewCell
+        let indexPath = tableView.indexPath(for: selectedCell)!
+        let selectedMovie = movies[indexPath.row]
+        
+        // 2. Pass the selected movie details to the next view controller
+        print("Loading up the details into the moviedetail screen")
+
+        let detailViewController = segue.destination as! MovieDetailsViewController
+        detailViewController.movie = selectedMovie
+        
+        // deselected movie after viewing movie details
+        tableView.deselectRow(at: indexPath, animated: true)
+    }
 }
